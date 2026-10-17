@@ -1,0 +1,13 @@
+datasets
+sentence-transformers
+bm25s
+PyStemmer
+ranx
+groq
+indic-transliteration
+wordfreq
+pandas
+numpy
+matplotlib
+pyyaml
+pytest
