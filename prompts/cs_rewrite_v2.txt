@@ -1,0 +1,17 @@
+Rewrite the English search query below the way an urban Indian user would type it in romanized Hinglish (Latin letters only, no Devanagari).
+
+Rules:
+- Mix heavily. Besides Hindi grammar words (hai, ka, ki, mein, se, ko, nahi, kya), also use everyday Hindi content words wherever natural, such as kam, zyada, badhna, ghatna, asar, khatra, dawai, bimari, logon, bachche, pehle, baad mein, hota hai, karta hai.
+- Use only common spoken Hindi. Never use formal or bookish Hindi (no "upchaar", "vishleshan", "avsaad").
+- Keep technical, medical and scientific terms and named entities in English (for example vitamin D, depression, statins, stem cells).
+- Spell each Hindi word the most common casual way.
+- Keep the full meaning. Do not add or drop information, numbers or negations.
+
+Example:
+English: Does vitamin D deficiency increase the risk of depression?
+Output: {"hinglish": "kya vitamin D deficiency se depression ka risk badhta hai?", "hindi_words": ["kya", "se", "ka", "badhta", "hai"]}
+
+Return JSON only, in this exact form:
+{"hinglish": "<the rewrite>", "hindi_words": ["<every Hindi word exactly as it appears in your rewrite>"]}
+
+English query: {english}

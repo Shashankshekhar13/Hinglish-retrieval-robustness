@@ -3,20 +3,17 @@ import random, re
 VOW = "aeiou"
 WORD = re.compile(r"[A-Za-z]+")
 
+FINAL = {"hai": ["h", "hy", "he"], "hain": ["hn", "hen"], "nahi": ["nahin"],
+         "nahin": ["nahi"], "kyun": ["kyu"], "mein": ["me", "men"]}
+
 def _hi_ops(w):
     n = len(w)
-    vd = [w[:i] + w[i+1:] for i in range(1, n-1) if w[i] in VOW]
+    c = lambda i: w[i] not in VOW
+    vd = [w[:i] + w[i+1:] for i in range(1, n-1)
+          if w[i] in VOW and c(i-1) and c(i+1)] if n >= 4 else []
     vl = [w[:m.start()] + {"aa": "a", "ee": "i", "oo": "u"}[m.group()] + w[m.end():]
           for m in re.finditer(r"aa|ee|oo", w)]
-    if not vl:
-        vl = [w[:i] + "aa" + w[i+1:] for i in range(1, n-1) if w[i] == "a"]
-        if w.endswith("i") and n > 2:
-            vl.append(w[:-1] + "ee")
-    fv = []
-    if w.endswith("ai") and n >= 3:
-        fv.append(w[:-2] + "e")
-    elif w[-1] in VOW:
-        fv.append(w + "n")
+    fv = FINAL.get(w, [])
     ca = []
     for a, b in [("v","w"),("w","v"),("j","z"),("z","j"),("f","ph"),("ph","f"),("s","sh"),("sh","s")]:
         for m in re.finditer(a, w):
@@ -24,9 +21,6 @@ def _hi_ops(w):
                 continue
             ca.append(w[:m.start()] + b + w[m.end():])
     ge = [w[:i] + w[i+1:] for i in range(n-1) if w[i] == w[i+1] and w[i] not in VOW]
-    if not ge:
-        ge = [w[:i] + w[i] + w[i:] for i in range(1, n-1)
-              if w[i] not in VOW and w[i-1] in VOW and w[i+1] in VOW]
     return [("vowel_delete", vd), ("vowel_length", vl), ("final_variant", fv),
             ("consonant_alt", ca), ("gemination", ge)]
 
