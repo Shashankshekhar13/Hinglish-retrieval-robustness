@@ -24,8 +24,8 @@ batch_size:
   bgem3: 8
 
 groq:
-  gen_model: TODO_check_console
-  translate_model: TODO_check_console
+  gen_model: llama-3.3-70b-versatile
+  translate_model: llama-3.1-8b-instant
   rpm: 20
   max_retries: 3
   prompt_version: v1
