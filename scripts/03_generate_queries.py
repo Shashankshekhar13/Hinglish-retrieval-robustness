@@ -4,6 +4,17 @@ from pathlib import Path
 # Ensure src is importable
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
+import os
+if "GROQ_API_KEY" not in os.environ:
+    import winreg
+    try:
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Environment") as key:
+            val, _ = winreg.QueryValueEx(key, "GROQ_API_KEY")
+            if val:
+                os.environ["GROQ_API_KEY"] = val
+    except Exception:
+        pass
+
 from groq import Groq
 from hcsir.data import load_beir
 from hcsir.generate import Cache, RateLimiter, generate_cs
@@ -28,5 +39,9 @@ if a.limit:
 
 template = open(f"prompts/cs_rewrite_{g['prompt_version']}.txt", encoding="utf-8").read()
 client, cache, lim = Groq(), Cache("data/cache/groq_gen.jsonl"), RateLimiter(g["rpm"])
-gen = lambda qid, en: generate_cs(a.dataset, qid, en, client, g, cache, lim, template)
+from hcsir.generate import GenResult
+def gen(qid, en):
+    if len(en.split()) < 3:
+        return GenResult("", [], "skipped_short", 0)
+    return generate_cs(a.dataset, qid, en, client, g, cache, lim, template)
 print(build_query_file(a.dataset, ds.queries, gen, cfg["seed"], cfg["noise_levels"], qids=qids))

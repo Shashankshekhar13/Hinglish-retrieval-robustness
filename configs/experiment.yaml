@@ -28,7 +28,7 @@ groq:
   translate_model: openai/gpt-oss-20b
   rpm: 20
   max_retries: 3
-  prompt_version: v2
+  prompt_version: v3
   min_mix: 0.25
 
 noise_levels:

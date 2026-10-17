@@ -3,7 +3,7 @@ from pathlib import Path
 
 COLS = ["item_id", "dataset", "qid", "english", "hinglish",
         "natural", "meaning_preserved", "rewrite", "notes"]
-N_PER_DS, SPARE = 40, 10
+N_PER_DS, SPARE = 40, 30
 
 def pick_qids(all_qids, n, spare, seed, dataset):
     ids = sorted(all_qids)

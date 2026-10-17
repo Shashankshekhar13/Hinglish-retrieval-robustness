@@ -4,7 +4,8 @@ VOW = "aeiou"
 WORD = re.compile(r"[A-Za-z]+")
 
 FINAL = {"hai": ["h", "hy", "he"], "hain": ["hn", "hen"], "nahi": ["nahin"],
-         "nahin": ["nahi"], "kyun": ["kyu"], "mein": ["me", "men"]}
+         "nahin": ["nahi"], "kyun": ["kyu"], "mein": ["me", "men"],
+         "kya": ["kia", "kyaa"], "ki": ["kee"], "ka": ["kaa"]}
 
 def _hi_ops(w):
     n = len(w)
@@ -60,7 +61,7 @@ def _noise(text, eligible, perturb, levels, seed):
         edits.append((i, old, new, op))
     out = {}
     for lv in levels:
-        ed = edits[:round(lv * len(pos))]
+        ed = edits[:int(lv * len(pos) + 0.5)]
         s = text
         for i, old, new, op in sorted(ed, key=lambda e: -toks[e[0]].start()):
             s = s[:toks[i].start()] + new + s[toks[i].end():]

@@ -69,6 +69,7 @@ def _parse(raw):
         return None, None, ["bad_json"]
 
 def _call(client, model, prompt, temp, limiter):
+    last_err = None
     for i in range(6):
         limiter.wait()
         try:
@@ -77,9 +78,10 @@ def _call(client, model, prompt, temp, limiter):
                 messages=[{"role": "user", "content": prompt}],
                 response_format={"type": "json_object"})
             return r.choices[0].message.content
-        except Exception:
+        except Exception as e:
+            last_err = e
             time.sleep(min(2 ** i, 60))
-    raise RuntimeError("Groq call failed after retries (nothing cached)")
+    raise RuntimeError(f"Groq call failed after retries: {type(last_err).__name__} - {last_err}")
 
 def generate_cs(dataset, qid, english, client, g, cache, limiter, template):
     key = f"{dataset}:{qid}:{g['prompt_version']}"
