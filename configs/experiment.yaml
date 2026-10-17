@@ -1,0 +1,37 @@
+seed: 42
+
+datasets:
+  scifact: null
+  nfcorpus: null
+  arguana: 300
+
+retrievers:
+  - bm25
+  - minilm
+  - e5small
+  - bgem3
+
+models:
+  minilm: sentence-transformers/all-MiniLM-L12-v2
+  e5small: intfloat/multilingual-e5-small
+  bgem3: BAAI/bge-m3
+
+device: auto
+
+batch_size:
+  minilm: 32
+  e5small: 32
+  bgem3: 8
+
+groq:
+  gen_model: TODO_check_console
+  translate_model: TODO_check_console
+  rpm: 20
+  max_retries: 3
+  prompt_version: v1
+
+noise_levels:
+  - 0.25
+  - 0.5
+
+top_k: 100
