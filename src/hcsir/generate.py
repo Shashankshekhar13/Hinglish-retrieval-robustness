@@ -68,7 +68,7 @@ def _parse(raw):
     except Exception:
         return None, None, ["bad_json"]
 
-def _call(client, model, prompt, temp, limiter):
+def _call(client, model, prompt, temp, limiter, max_tokens=750):
     last_err = None
     for i in range(8):
         limiter.wait()
@@ -78,7 +78,7 @@ def _call(client, model, prompt, temp, limiter):
                 model=model, temperature=temp,
                 messages=[{"role": "user", "content": prompt}],
                 response_format={"type": "json_object"},
-                max_tokens=750)
+                max_tokens=max_tokens)
             return r.choices[0].message.content
         except Exception as e:
             last_err = e
@@ -97,10 +97,11 @@ def generate_cs(dataset, qid, english, client, g, cache, limiter, template):
     if c:
         return GenResult(c["hinglish"], c["hindi_words"], c["status"], c["attempts"], c["reasons"])
     prompt = template.replace("{english}", english)
+    max_tokens = g.get("max_tokens", 750)
     res, hing, hw, reasons = None, None, None, []
     for attempt in range(1, g["max_retries"] + 1):
         try:
-            raw = _call(client, g["gen_model"], prompt, 0.2 if attempt == 1 else 0.7, limiter)
+            raw = _call(client, g["gen_model"], prompt, 0.2 if attempt == 1 else 0.7, limiter, max_tokens)
         except Exception as e:
             reasons = [f"api_error:{type(e).__name__}"]
             break
@@ -114,6 +115,7 @@ def generate_cs(dataset, qid, english, client, g, cache, limiter, template):
             break
     if res is None:
         res = GenResult(hing or "", hw or [], "failed", g["max_retries"], reasons)
-    cache.put(key, {"hinglish": res.hinglish, "hindi_words": res.hindi_words,
-                    "status": res.status, "attempts": res.attempts, "reasons": res.reasons})
+    if not any(str(r).startswith("api_error") for r in res.reasons):
+        cache.put(key, {"hinglish": res.hinglish, "hindi_words": res.hindi_words,
+                        "status": res.status, "attempts": res.attempts, "reasons": res.reasons})
     return res

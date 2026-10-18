@@ -31,6 +31,11 @@ groq:
   prompt_version: v3
   min_mix: 0.25
 
+max_tokens:
+  scifact: 600
+  nfcorpus: 600
+  arguana: 1500
+
 noise_levels:
   - 0.25
   - 0.5

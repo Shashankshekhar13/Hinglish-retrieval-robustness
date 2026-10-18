@@ -28,7 +28,9 @@ ap.add_argument("--annotation-first", action="store_true")
 a = ap.parse_args()
 
 cfg = yaml.safe_load(open("configs/experiment.yaml", encoding="utf-8"))
-g = cfg["groq"]
+g = dict(cfg["groq"])
+if "max_tokens" in cfg and a.dataset in cfg["max_tokens"]:
+    g["max_tokens"] = cfg["max_tokens"][a.dataset]
 ds = load_beir(a.dataset, cfg["datasets"][a.dataset], cfg["seed"])
 qids = sorted(ds.queries)
 if a.annotation_first:

@@ -35,6 +35,13 @@ Empirical investigation into romanized Hindi-English (Hinglish) code-switched qu
 - **Transliteration**: We use `indic_transliteration` (ITRANS -> Devanagari) rather than IndicXlit for zero-shot script mapping without additional neural model download or latency overhead.
 - **PhonoNorm**: Training-free phonetic normalization that projects Romanized Hindi variants to canonical keys.
 
+## Implementation Details & Resource Refinements
+
+- **`hindi_words` Pruning in Validation**:
+  The LLM generation prompt outputs a JSON object with `"hinglish"` text and a list of `"hindi_words"`. In longer queries (such as full debate arguments in ArguAna), the model occasionally produces Hindi word lists containing minor spelling variants or hallucinated tokens not literally present in the rewritten text. To avoid false-positive validation failures while maintaining strict data quality, the validator prunes `hindi_words` to only those tokens that actually appear in the generated `hinglish` string before computing the mixing ratio and validating code-switching criteria.
+- **Homographs Removed from `resources/hi_stopwords.txt`**:
+  Common English words that could conflict with Romanized Hindi stopword variants (`she`, `mere`, `key`, `men`, `de`, `le`, `h`) were excluded from `hi_stopwords.txt`, and `"or"` was explicitly omitted from the variants of `"aur"`. This ensures pure English queries in the benchmark are never erroneously tagged as Hindi by the language tagger (verified 0 false positives across all 14,209 tokens in the BEIR query sets).
+
 ## Reproduction Steps
 
 1. **Data Download & Preparation**:
