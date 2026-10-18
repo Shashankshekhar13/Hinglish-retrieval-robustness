@@ -17,11 +17,13 @@ def build_query_file(name, queries, gen_fn, seed, levels, out_dir="data/queries"
     target_qids = qids or sorted(queries)
     for idx, qid in enumerate(target_qids):
         if qid in recs:
+            print(f"[{idx+1}/{len(target_qids)}] {qid}: {recs[qid]['gen_status']} (cached)", flush=True)
             continue
+        print(f"[{idx+1}/{len(target_qids)}] {qid}: generating...", end="", flush=True)
         en = queries[qid]
         s = zlib.crc32(f"{seed}:{qid}".encode())
         g = gen_fn(qid, en)
-        print(f"[{idx+1}/{len(target_qids)}] {qid}: {g.status}", flush=True)
+        print(f" -> {g.status}", flush=True)
         en_n = add_en_noise(en, levels, s)
         rec = {"qid": qid, "dataset": name, "EN": en, "gen_status": g.status,
                "hindi_words": g.hindi_words,

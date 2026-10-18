@@ -72,17 +72,21 @@ def _call(client, model, prompt, temp, limiter):
     last_err = None
     for i in range(8):
         limiter.wait()
+        c = next(client) if hasattr(client, "__next__") else client
         try:
-            r = client.chat.completions.create(
+            r = c.chat.completions.create(
                 model=model, temperature=temp,
                 messages=[{"role": "user", "content": prompt}],
                 response_format={"type": "json_object"},
-                max_tokens=700)
+                max_tokens=750)
             return r.choices[0].message.content
         except Exception as e:
             last_err = e
+            if "BadRequest" in type(e).__name__ or "400" in str(e):
+                raise e
             if "RateLimit" in type(e).__name__ or "429" in str(e):
-                time.sleep(35)
+                print(" [429: waiting 30s...]", end="", flush=True)
+                time.sleep(30)
             else:
                 time.sleep(min(2 ** i, 60))
     raise RuntimeError(f"Groq call failed after retries: {type(last_err).__name__} - {last_err}")
@@ -95,9 +99,15 @@ def generate_cs(dataset, qid, english, client, g, cache, limiter, template):
     prompt = template.replace("{english}", english)
     res, hing, hw, reasons = None, None, None, []
     for attempt in range(1, g["max_retries"] + 1):
-        raw = _call(client, g["gen_model"], prompt, 0.2 if attempt == 1 else 0.7, limiter)
+        try:
+            raw = _call(client, g["gen_model"], prompt, 0.2 if attempt == 1 else 0.7, limiter)
+        except Exception as e:
+            reasons = [f"api_error:{type(e).__name__}"]
+            break
         hing, hw, reasons = _parse(raw)
         if hing is not None:
+            tok_set = set(_toks(hing))
+            hw = [w for w in hw if any(t in tok_set for t in _toks(w))]
             reasons = validate(english, hing, hw, g.get("min_mix", 0.2))
         if not reasons:
             res = GenResult(hing, hw, "ok", attempt, [])

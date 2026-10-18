@@ -13,6 +13,6 @@ English: Does vitamin D deficiency increase the risk of depression?
 Output: {"hinglish": "kya vitamin D deficiency se depression ka risk badhta hai?", "hindi_words": ["kya", "se", "ka", "badhta", "hai"]}
 
 Return JSON only, in this exact form:
-{"hinglish": "<the rewrite>", "hindi_words": ["<every Hindi word exactly as it appears in your rewrite>"]}
+{"hinglish": "<the rewrite>", "hindi_words": ["<list of unique Hindi words that appear in your rewrite, no duplicates>"]}
 
 English query: {english}
