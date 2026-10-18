@@ -1,12 +1,12 @@
 nahi,nahin,nhi,nai,nahee
-hai,h,he,hy
+hai,he,hy
 hain,hn,hen
 kya,kia,kyaa
 ka,kaa
 ki,kee
-ke,key
-mein,me,main,mai,men
-se,she
+ke
+mein,me,main,mai
+se
 ko,koo
 aur,aor,awr,aaur
 bhi,bi,bhee
@@ -59,7 +59,7 @@ wahan,waha
 yahan,yaha
 hum,ham
 tum,aap
-mera,meri,mere
+mera,meri
 tera,teri,tere
 iska,iski,iske
 uska,uski,uske
@@ -87,8 +87,8 @@ deta,dete,deti
 kare,karen,karega,karenge
 hoga,hogi,hoge,honge
 kar,karna,karne
-de,dena,dene
-le,lena,lene
+dena,dene
+lena,lene
 ja,jaa,jana,jane,jata,jate,jati
 aana,aane,aata,aate,aati
 bol,bolna,bolne
