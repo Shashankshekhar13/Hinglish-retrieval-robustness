@@ -39,12 +39,30 @@ if a.limit:
     qids = qids[:a.limit]
 
 template = open(f"prompts/cs_rewrite_{g['prompt_version']}.txt", encoding="utf-8").read()
-rpm = 2 if a.dataset == "arguana" else g["rpm"]
-client = Groq(max_retries=1)
+
+import itertools
+keys = []
+if "GROQ_API_KEYS" in os.environ:
+    keys = [k.strip() for k in os.environ["GROQ_API_KEYS"].split(",") if k.strip()]
+elif "GROQ_API_KEY_2" in os.environ:
+    keys = [k for k in [os.environ.get("GROQ_API_KEY"), os.environ.get("GROQ_API_KEY_2")] if k]
+elif "GROQ_API_KEY" in os.environ:
+    keys = [os.environ["GROQ_API_KEY"]]
+
+if not keys:
+    keys = [os.environ.get("GROQ_API_KEY", "")]
+
+clients = [Groq(api_key=k, max_retries=1) for k in keys if k]
+client_cycle = itertools.cycle(clients if clients else [Groq(max_retries=1)])
+n_keys = max(1, len(clients))
+rpm = (2 * n_keys) if a.dataset == "arguana" else g["rpm"]
 cache, lim = Cache("data/cache/groq_gen.jsonl"), RateLimiter(rpm)
+print(f"Using {n_keys} Groq key(s) with effective RPM={rpm}")
+
 from hcsir.generate import GenResult
 def gen(qid, en):
     if len(en.split()) < 3:
         return GenResult("", [], "skipped_short", 0)
-    return generate_cs(a.dataset, qid, en, client, g, cache, lim, template)
+    c = next(client_cycle)
+    return generate_cs(a.dataset, qid, en, c, g, cache, lim, template)
 print(build_query_file(a.dataset, ds.queries, gen, cfg["seed"], cfg["noise_levels"], qids=qids))
