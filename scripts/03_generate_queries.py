@@ -32,7 +32,8 @@ g = cfg["groq"]
 ds = load_beir(a.dataset, cfg["datasets"][a.dataset], cfg["seed"])
 qids = sorted(ds.queries)
 if a.annotation_first:
-    main, spare = pick_qids(qids, N_PER_DS, SPARE, cfg["seed"], a.dataset)
+    pool = [q for q in qids if len(ds.queries[q].split()) >= 3]
+    main, spare = pick_qids(pool, N_PER_DS, SPARE, cfg["seed"], a.dataset)
     qids = main + spare
 if a.limit:
     qids = qids[:a.limit]
