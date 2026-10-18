@@ -70,17 +70,21 @@ def _parse(raw):
 
 def _call(client, model, prompt, temp, limiter):
     last_err = None
-    for i in range(6):
+    for i in range(8):
         limiter.wait()
         try:
             r = client.chat.completions.create(
                 model=model, temperature=temp,
                 messages=[{"role": "user", "content": prompt}],
-                response_format={"type": "json_object"})
+                response_format={"type": "json_object"},
+                max_tokens=700)
             return r.choices[0].message.content
         except Exception as e:
             last_err = e
-            time.sleep(min(2 ** i, 60))
+            if "RateLimit" in type(e).__name__ or "429" in str(e):
+                time.sleep(35)
+            else:
+                time.sleep(min(2 ** i, 60))
     raise RuntimeError(f"Groq call failed after retries: {type(last_err).__name__} - {last_err}")
 
 def generate_cs(dataset, qid, english, client, g, cache, limiter, template):
