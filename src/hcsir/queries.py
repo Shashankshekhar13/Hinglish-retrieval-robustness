@@ -14,12 +14,14 @@ def build_query_file(name, queries, gen_fn, seed, levels, out_dir="data/queries"
             if line.strip():
                 r = json.loads(line)
                 recs[r["qid"]] = r
-    for qid in (qids or sorted(queries)):
+    target_qids = qids or sorted(queries)
+    for idx, qid in enumerate(target_qids):
         if qid in recs:
             continue
         en = queries[qid]
         s = zlib.crc32(f"{seed}:{qid}".encode())
         g = gen_fn(qid, en)
+        print(f"[{idx+1}/{len(target_qids)}] {qid}: {g.status}", flush=True)
         en_n = add_en_noise(en, levels, s)
         rec = {"qid": qid, "dataset": name, "EN": en, "gen_status": g.status,
                "hindi_words": g.hindi_words,
@@ -35,7 +37,7 @@ def build_query_file(name, queries, gen_fn, seed, levels, out_dir="data/queries"
             for l in levels:
                 rec[f"CS-noise{_k(l)}"] = hi[l][0]
         recs[qid] = rec
-    with open(out, "w", encoding="utf-8") as f:
-        for q in sorted(recs):
-            f.write(json.dumps(recs[q], ensure_ascii=False) + "\n")
+        with open(out, "w", encoding="utf-8") as f:
+            for q in sorted(recs):
+                f.write(json.dumps(recs[q], ensure_ascii=False) + "\n")
     return out

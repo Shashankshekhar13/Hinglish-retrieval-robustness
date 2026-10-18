@@ -39,7 +39,9 @@ if a.limit:
     qids = qids[:a.limit]
 
 template = open(f"prompts/cs_rewrite_{g['prompt_version']}.txt", encoding="utf-8").read()
-client, cache, lim = Groq(), Cache("data/cache/groq_gen.jsonl"), RateLimiter(g["rpm"])
+rpm = 2 if a.dataset == "arguana" else g["rpm"]
+client = Groq(max_retries=1)
+cache, lim = Cache("data/cache/groq_gen.jsonl"), RateLimiter(rpm)
 from hcsir.generate import GenResult
 def gen(qid, en):
     if len(en.split()) < 3:
