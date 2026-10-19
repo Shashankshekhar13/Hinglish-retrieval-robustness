@@ -13,13 +13,13 @@ def build_vocab_expanded_minilm(lexicon: RomanLexicon, cfg) -> DenseRetriever:
         dev = "cuda" if torch.cuda.is_available() else "cpu"
 
     base_model_name = getattr(cfg, "models", {}).get("minilm", "sentence-transformers/all-MiniLM-L12-v2")
-    st_model = SentenceTransformer(base_model_name, device=dev)
+    st_model = SentenceTransformer(base_model_name, device="cpu")
     tokenizer = st_model.tokenizer
     hf_model = st_model[0].auto_model
 
     # Get input embeddings layer
     input_embeddings = hf_model.get_input_embeddings()
-    orig_weights = input_embeddings.weight.data
+    orig_weights = input_embeddings.weight.data.clone()
     emb_dim = orig_weights.shape[1]
 
     # Find canonical romanized Hindi words of length >= 3 not already a single token
@@ -38,6 +38,18 @@ def build_vocab_expanded_minilm(lexicon: RomanLexicon, cfg) -> DenseRetriever:
             word_glosses[w] = glosses
 
     if words_to_add:
+        # Precompute gloss subword vectors before expanding tokenizer
+        word_vectors = {}
+        for w in words_to_add:
+            gloss_vectors = []
+            for g in word_glosses[w]:
+                sub_ids = tokenizer(g, add_special_tokens=False)["input_ids"]
+                if sub_ids:
+                    g_vec = orig_weights[sub_ids].mean(dim=0)
+                    gloss_vectors.append(g_vec)
+            if gloss_vectors:
+                word_vectors[w] = torch.stack(gloss_vectors).mean(dim=0)
+
         # Add tokens with single_word=True
         tokens_to_add = [AddedToken(w, single_word=True) for w in words_to_add]
         num_added = tokenizer.add_tokens(tokens_to_add)
@@ -46,19 +58,13 @@ def build_vocab_expanded_minilm(lexicon: RomanLexicon, cfg) -> DenseRetriever:
         hf_model.resize_token_embeddings(len(tokenizer))
         new_weights = hf_model.get_input_embeddings().weight.data
 
-        # Initialize each new embedding as mean over English glosses' mean subword embeddings
-        for w in words_to_add:
+        # Initialize each new embedding
+        for w, vec in word_vectors.items():
             token_id = tokenizer.convert_tokens_to_ids(w)
-            gloss_vectors = []
-            for g in word_glosses[w]:
-                sub_ids = tokenizer(g, add_special_tokens=False)["input_ids"]
-                if sub_ids:
-                    # Use orig_weights to compute gloss subword mean
-                    g_vec = orig_weights[sub_ids].mean(dim=0)
-                    gloss_vectors.append(g_vec)
-            if gloss_vectors:
-                mean_gloss_vec = torch.stack(gloss_vectors).mean(dim=0)
-                new_weights[token_id] = mean_gloss_vec.to(new_weights.device)
+            new_weights[token_id] = vec
+
+    if dev != "cpu":
+        st_model = st_model.to(dev)
 
     # Wrap in DenseRetriever with separate cache dir outputs/emb/minilm_vocabexp/
     if hasattr(cfg, "cache_dir") and cfg.cache_dir:

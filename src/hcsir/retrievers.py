@@ -220,9 +220,15 @@ class DenseRetriever(BaseRetriever):
                     break
         return run
 
-def get_retriever(name: str, cfg) -> BaseRetriever:
+def get_retriever(name: str, cfg, lexicon=None) -> BaseRetriever:
     if name == "bm25":
         return BM25Retriever(cfg=cfg)
+    if name == "minilm_vocabexp":
+        from .baselines.vocab_expansion import build_vocab_expanded_minilm
+        if lexicon is None:
+            from .lexicon import RomanLexicon
+            lexicon = RomanLexicon.load("data/lexicon/roman_hi_en.json")
+        return build_vocab_expanded_minilm(lexicon, cfg)
     models = getattr(cfg, "models", {})
     if isinstance(models, dict) and name in models:
         model_name = models[name]
