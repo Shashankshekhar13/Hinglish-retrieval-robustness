@@ -34,7 +34,7 @@ groq:
 max_tokens:
   scifact: 600
   nfcorpus: 600
-  arguana: 750
+  arguana: 3000
 
 noise_levels:
   - 0.25

@@ -24,6 +24,12 @@ def build_query_file(name, queries, gen_fn, seed, levels, out_dir="data/queries"
         s = zlib.crc32(f"{seed}:{qid}".encode())
         g = gen_fn(qid, en)
         print(f" -> {g.status}", flush=True)
+        if any("DailyTokenLimitError" in str(r) for r in getattr(g, "reasons", [])):
+            print(f" [STOPPING: Daily token limit reached. Will resume after reset.]", flush=True)
+            break
+        if any(str(r).startswith("api_error") for r in getattr(g, "reasons", [])):
+            print(f" [WARNING: {qid} failed with api_error ({g.reasons}), skipping writing to query file]", flush=True)
+            continue
         en_n = add_en_noise(en, levels, s)
         rec = {"qid": qid, "dataset": name, "EN": en, "gen_status": g.status,
                "hindi_words": g.hindi_words,

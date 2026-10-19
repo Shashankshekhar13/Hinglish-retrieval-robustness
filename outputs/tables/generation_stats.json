@@ -1,0 +1,23 @@
+{
+  "scifact": {
+    "total": 300,
+    "ok": 296,
+    "skipped_short": 0,
+    "failed_validation": 2,
+    "not_generated_api_limit": 2
+  },
+  "nfcorpus": {
+    "total": 323,
+    "ok": 133,
+    "skipped_short": 172,
+    "failed_validation": 17,
+    "not_generated_api_limit": 1
+  },
+  "arguana": {
+    "total": 300,
+    "ok": 233,
+    "skipped_short": 0,
+    "failed_validation": 0,
+    "not_generated_api_limit": 67
+  }
+}

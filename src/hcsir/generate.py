@@ -68,8 +68,12 @@ def _parse(raw):
     except Exception:
         return None, None, ["bad_json"]
 
+class DailyTokenLimitError(RuntimeError):
+    pass
+
 def _call(client, model, prompt, temp, limiter, max_tokens=750):
     last_err = None
+    tpd_count = 0
     for i in range(24):
         limiter.wait()
         c = next(client) if hasattr(client, "__next__") else client
@@ -86,6 +90,10 @@ def _call(client, model, prompt, temp, limiter, max_tokens=750):
             if "badrequest" in type(e).__name__.lower() or "400" in str(e):
                 raise e
             if "tokens per day" in err_str or "tpd" in err_str:
+                tpd_count += 1
+                if tpd_count >= 6:
+                    print("\n[Daily token limit reached on available keys. Stopping cleanly.]", flush=True)
+                    raise DailyTokenLimitError("Daily token limit (TPD) reached on available Groq keys.")
                 print(" [TPD limit on key, switching key...]", end="", flush=True)
                 continue
             if "ratelimit" in type(e).__name__.lower() or "429" in str(e):
@@ -101,11 +109,14 @@ def generate_cs(dataset, qid, english, client, g, cache, limiter, template):
     if c:
         return GenResult(c["hinglish"], c["hindi_words"], c["status"], c["attempts"], c["reasons"])
     prompt = template.replace("{english}", english)
-    max_tokens = min(g.get("max_tokens", 750), 750)
+    max_tokens = g.get("max_tokens", 1000)
     res, hing, hw, reasons = None, None, None, []
     for attempt in range(1, g["max_retries"] + 1):
         try:
             raw = _call(client, g["gen_model"], prompt, 0.2 if attempt == 1 else 0.7, limiter, max_tokens)
+        except DailyTokenLimitError as e:
+            reasons = ["api_error:DailyTokenLimitError"]
+            break
         except Exception as e:
             reasons = [f"api_error:{type(e).__name__}"]
             break
