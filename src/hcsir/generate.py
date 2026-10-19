@@ -70,7 +70,7 @@ def _parse(raw):
 
 def _call(client, model, prompt, temp, limiter, max_tokens=750):
     last_err = None
-    for i in range(8):
+    for i in range(24):
         limiter.wait()
         c = next(client) if hasattr(client, "__next__") else client
         try:
@@ -82,9 +82,13 @@ def _call(client, model, prompt, temp, limiter, max_tokens=750):
             return r.choices[0].message.content
         except Exception as e:
             last_err = e
-            if "BadRequest" in type(e).__name__ or "400" in str(e):
+            err_str = str(e).lower()
+            if "badrequest" in type(e).__name__.lower() or "400" in str(e):
                 raise e
-            if "RateLimit" in type(e).__name__ or "429" in str(e):
+            if "tokens per day" in err_str or "tpd" in err_str:
+                print(" [TPD limit on key, switching key...]", end="", flush=True)
+                continue
+            if "ratelimit" in type(e).__name__.lower() or "429" in str(e):
                 print(" [429: waiting 30s...]", end="", flush=True)
                 time.sleep(30)
             else:
@@ -97,7 +101,7 @@ def generate_cs(dataset, qid, english, client, g, cache, limiter, template):
     if c:
         return GenResult(c["hinglish"], c["hindi_words"], c["status"], c["attempts"], c["reasons"])
     prompt = template.replace("{english}", english)
-    max_tokens = g.get("max_tokens", 750)
+    max_tokens = min(g.get("max_tokens", 750), 750)
     res, hing, hw, reasons = None, None, None, []
     for attempt in range(1, g["max_retries"] + 1):
         try:

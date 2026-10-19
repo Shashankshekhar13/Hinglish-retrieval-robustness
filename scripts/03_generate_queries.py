@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 import os, winreg
-for _k in ["GROQ_API_KEY", "GROQ_API_KEY_2"]:
+for _k in ["GROQ_API_KEY", "GROQ_API_KEY_2", "GROQ_API_KEY_3"]:
     if _k not in os.environ:
         try:
             with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Environment") as key:
@@ -46,10 +46,17 @@ import itertools
 keys = []
 if "GROQ_API_KEYS" in os.environ:
     keys = [k.strip() for k in os.environ["GROQ_API_KEYS"].split(",") if k.strip()]
-elif "GROQ_API_KEY_2" in os.environ:
-    keys = [k for k in [os.environ.get("GROQ_API_KEY"), os.environ.get("GROQ_API_KEY_2")] if k]
-elif "GROQ_API_KEY" in os.environ:
-    keys = [os.environ["GROQ_API_KEY"]]
+else:
+    # Auto-discover GROQ_API_KEY, GROQ_API_KEY_2, GROQ_API_KEY_3, etc.
+    keys = []
+    if os.environ.get("GROQ_API_KEY"):
+        keys.append(os.environ["GROQ_API_KEY"])
+    i = 2
+    while f"GROQ_API_KEY_{i}" in os.environ:
+        val = os.environ[f"GROQ_API_KEY_{i}"].strip()
+        if val:
+            keys.append(val)
+        i += 1
 
 if not keys:
     keys = [os.environ.get("GROQ_API_KEY", "")]
