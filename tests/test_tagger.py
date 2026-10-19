@@ -8,12 +8,26 @@ def test_basic_mix():
 
 def test_ambiguous_hi_context():
     tagger = Tagger(lexicon=None)
-    tokens = tokenize("main ghar ja raha hoon")
+    # 'main' has direct neighbor 'ja'/'raha' or 'ghar'
+    # 'main ja raha hoon': 'ja' is a stopword (rule 2), so 'main' gets HI
+    tokens = tokenize("main ja raha hoon")
     tags = tagger.tag(tokens)
     assert tags[0] == "HI"
-    assert tags[1] == "EN"
+    assert tags[1] == "HI"
+    assert tags[2] == "HI"
     assert tags[3] == "HI"
-    assert tags[4] == "HI"
+
+def test_rule5_does_not_trigger_ambiguous_hi():
+    class DummyLexicon:
+        def has(self, w):
+            return w == "drc"
+    tagger = Tagger(lexicon=DummyLexicon())
+    # 'in' is ambiguous, 'drc' is tagged HI by rule 5 (lexicon)
+    # rule 3: 'in' must NOT become HI because 'drc' is rule 5, not rule 2
+    tokens = tokenize("in drc")
+    tags = tagger.tag(tokens)
+    assert tags[0] == "EN"
+    assert tags[1] == "HI"
 
 def test_ambiguous_en_context():
     tagger = Tagger()

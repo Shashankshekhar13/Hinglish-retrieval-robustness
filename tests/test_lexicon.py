@@ -60,3 +60,18 @@ def test_roundtrip(tmp_path):
     probes = ["paani", "paanee", "ghar", "house", "xyz"]
     for word in probes:
         assert lex.lookup(word) == loaded.lookup(word)
+
+def test_key_level_edit_distance_ranking():
+    # 'kaal' -> 'time' (count 10)
+    # 'kal' -> 'tomorrow' (count 1)
+    # Both share phonetic key 'kl'.
+    # If user types 'kl' (not in exact map, phonetic_key is 'kl'):
+    # edit distance to 'kal' is 1 (delete 'a')
+    # edit distance to 'kaal' is 2 (delete 'aa')
+    # Prioritizing edit distance to headword first means 'tomorrow' must rank before 'time' for 'kl',
+    # even though 'time' had count 10 and 'tomorrow' had count 1!
+    pairs = [("kaal", "time")] * 10 + [("kal", "tomorrow")] * 1
+    lex = RomanLexicon.from_pairs(pairs)
+    glosses, level = lex.lookup("kl")
+    assert level == "key"
+    assert glosses[0] == "tomorrow"

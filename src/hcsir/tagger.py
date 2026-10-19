@@ -49,12 +49,14 @@ class Tagger:
     def tag(self, tokens: list[str]) -> list[str]:
         tags = [None] * len(tokens)
         # Pass 1: Tag definite tokens
+        is_rule2 = [False] * len(tokens)
         for i, tok in enumerate(tokens):
             t = tok.lower()
             if not t or t.isdigit():
                 tags[i] = "OTHER"
             elif t in self.stopwords and t not in self.ambiguous:
                 tags[i] = "HI"
+                is_rule2[i] = True
             elif t in self.ambiguous:
                 tags[i] = None
             elif zipf_frequency(t, "en") >= 3.0:
@@ -64,13 +66,12 @@ class Tagger:
             else:
                 tags[i] = "EN"
 
-        # Pass 2: Resolve ambiguous tokens based on context
-        has_hi = any(t == "HI" for t in tags if t is not None)
+        # Pass 2: Resolve ambiguous tokens based on rule-2 context only
         for i, tok in enumerate(tokens):
             if tags[i] is None:
-                left_hi = i > 0 and tags[i - 1] == "HI"
-                right_hi = i + 1 < len(tokens) and tags[i + 1] == "HI"
-                if left_hi or right_hi or has_hi:
+                left_hi = i > 0 and is_rule2[i - 1]
+                right_hi = i + 1 < len(tokens) and is_rule2[i + 1]
+                if left_hi or right_hi:
                     tags[i] = "HI"
                 else:
                     tags[i] = "EN"
