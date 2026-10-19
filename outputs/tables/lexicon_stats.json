@@ -1,0 +1,9 @@
+{
+  "entries": 29704,
+  "unique_exact_forms": 24433,
+  "unique_keys": 12522,
+  "unique_coarse_keys": 10761,
+  "mean_glosses_per_key": 2.26,
+  "collision_rate": 0.3456,
+  "collision_count": 4328
+}
