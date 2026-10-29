@@ -228,7 +228,6 @@ PhonoNorm operates purely at inference time with zero model fine-tuning:
 │   │   ├── scidocs.jsonl
 │   │   └── scifact.jsonl
 │   └── raw/                        # Pre-cached BEIR corpora & qrels (.pkl)
-├── docs/                           # Research specifications, writing plans, and prompts
 ├── outputs/
 │   ├── emb/                        # Precomputed dense corpus embeddings
 │   ├── figures/                    # Publication figures (PDF & high-res PNG)
