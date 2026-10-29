@@ -19,5 +19,19 @@
     "skipped_short": 0,
     "failed_validation": 0,
     "not_generated_api_limit": 67
+  },
+  "fiqa": {
+    "total": 300,
+    "ok": 297,
+    "skipped_short": 1,
+    "failed_validation": 2,
+    "not_generated_api_limit": 0
+  },
+  "scidocs": {
+    "total": 300,
+    "ok": 207,
+    "skipped_short": 0,
+    "failed_validation": 0,
+    "not_generated_api_limit": 93
   }
 }

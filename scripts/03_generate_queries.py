@@ -64,7 +64,7 @@ if not keys:
 clients = [Groq(api_key=k, max_retries=1) for k in keys if k]
 client_cycle = itertools.cycle(clients if clients else [Groq(max_retries=1)])
 n_keys = max(1, len(clients))
-rpm = (2 * n_keys) if a.dataset == "arguana" else g["rpm"]
+rpm = (2 * n_keys) if a.dataset == "arguana" else min(45, 15 * n_keys)
 cache, lim = Cache("data/cache/groq_gen.jsonl"), RateLimiter(rpm)
 print(f"Using {n_keys} Groq key(s) with effective RPM={rpm}")
 

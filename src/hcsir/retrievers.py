@@ -115,7 +115,7 @@ class DenseRetriever(BaseRetriever):
                     sorted_texts,
                     batch_size=bs,
                     normalize_embeddings=True,
-                    show_progress_bar=False,
+                    show_progress_bar=True,
                     convert_to_numpy=True
                 )
                 break

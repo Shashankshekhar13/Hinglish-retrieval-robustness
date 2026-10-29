@@ -30,6 +30,12 @@ def parse_args():
         help="Filters in the form key=val1,val2 (e.g. --only retriever=bm25,minilm,e5small dataset=scifact)",
     )
     parser.add_argument(
+        "--dataset",
+        type=str,
+        default=None,
+        help="Optional shorthand to filter by dataset (e.g. --dataset fiqa)",
+    )
+    parser.add_argument(
         "--force",
         action="store_true",
         help="Force recomputation of existing run files",
@@ -76,6 +82,8 @@ def main():
         logger.warning(f"Config file {cfg_path} not found. Using defaults.")
 
     only_dict = parse_only_args(args.only)
+    if args.dataset:
+        only_dict["dataset"] = args.dataset
     logger.info(f"Running grid with filters: {only_dict if only_dict else 'None (Full grid)'}")
 
     df = run_grid(

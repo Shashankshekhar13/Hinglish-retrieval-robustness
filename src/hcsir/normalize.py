@@ -8,6 +8,10 @@ class NormResult:
     stats: dict
 
 def normalize(text: str, mode: str, lexicon: RomanLexicon, tagger: Tagger) -> NormResult:
+    valid_modes = {"none", "stop", "exact", "key", "key_expand"}
+    if mode not in valid_modes:
+        raise ValueError(f"Unknown normalizer mode: {mode!r}. Valid modes are: {valid_modes}")
+
     stats = {
         "tokens_hi": 0,
         "resolved_exact": 0,
@@ -85,8 +89,5 @@ def normalize(text: str, mode: str, lexicon: RomanLexicon, tagger: Tagger) -> No
             else:
                 out_tokens.append(tok)
             continue
-
-        # Fallback for unknown mode
-        out_tokens.append(tok)
 
     return NormResult(text=" ".join(out_tokens), stats=stats)

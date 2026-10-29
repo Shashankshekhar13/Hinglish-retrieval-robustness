@@ -4,6 +4,8 @@ datasets:
   scifact: null
   nfcorpus: null
   arguana: 300
+  fiqa: 300
+  scidocs: 300
 
 retrievers:
   - bm25
@@ -19,9 +21,9 @@ models:
 device: auto
 
 batch_size:
-  minilm: 32
-  e5small: 32
-  bgem3: 8
+  minilm: 64
+  e5small: 64
+  bgem3: 16
 
 groq:
   gen_model: qwen/qwen3.8-27b
@@ -35,6 +37,8 @@ max_tokens:
   scifact: 600
   nfcorpus: 600
   arguana: 3000
+  fiqa: 600
+  scidocs: 600
 
 noise_levels:
   - 0.25

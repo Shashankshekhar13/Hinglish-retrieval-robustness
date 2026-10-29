@@ -1,0 +1,187 @@
+family,dataset,retriever,test_id,description,run_a,run_b,ndcg_a,ndcg_b,diff,wins_a,ties,wins_b,p_value_raw,p_value_holm,p_raw_str,p_holm_str,significant_alpha_0_05
+primary,pooled,bm25,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.4032329828042908,0.37932104444495046,0.023911938359340357,237,796,133,0.0,0.0,< 1e-5,< 1e-5,True
+primary,pooled,bm25,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.37932104444495046,0.3804931911535596,-0.0011721467086091564,82,1003,81,0.54182,1.0,0.54182,1.00000,False
+primary,pooled,bm25,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.3911416353243867,0.3804931911535596,0.01064844417082711,129,1030,7,0.0,0.0,< 1e-5,< 1e-5,True
+primary,pooled,bm25,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.38691564863284983,0.3911416353243867,-0.004225986691536898,61,1003,102,0.17571,1.0,0.17571,1.00000,False
+primary,pooled,bm25,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.38691564863284983,0.3804931911535596,0.006422457479290211,148,938,80,0.05592,0.5591999999999999,0.05592,0.55920,False
+primary,pooled,minilm,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.4456926346734587,0.3426021009123916,0.10309053376106708,489,513,164,0.0,0.0,< 1e-5,< 1e-5,True
+primary,pooled,minilm,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.3426021009123916,0.3396553169868553,0.0029467839255363226,199,782,185,0.29898,1.0,0.29898,1.00000,False
+primary,pooled,minilm,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.37151270844902695,0.3396553169868553,0.03185739146217165,332,628,206,0.0,0.0,< 1e-5,< 1e-5,True
+primary,pooled,minilm,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.37285669160253365,0.37151270844902695,0.0013439831535067004,201,777,188,0.77231,1.0,0.77231,1.00000,False
+primary,pooled,minilm,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.37285669160253365,0.3396553169868553,0.03320137461567835,365,578,223,0.0,0.0,< 1e-5,< 1e-5,True
+primary,pooled,e5small,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.3979629739164186,0.3220104672126191,0.0759525067037995,397,609,160,0.0,0.0,< 1e-5,< 1e-5,True
+primary,pooled,e5small,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.3220104672126191,0.31207825360583885,0.00993221360678026,194,830,142,0.00291,0.03201,0.00291,0.03201,True
+primary,pooled,e5small,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.32084436487646506,0.31207825360583885,0.008766111270626209,254,702,210,0.11688,0.86787,0.11688,0.86787,False
+primary,pooled,e5small,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.317572856371655,0.32084436487646506,-0.003271508504810061,155,857,154,0.41198,1.0,0.41198,1.00000,False
+primary,pooled,e5small,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.317572856371655,0.31207825360583885,0.005494602765816148,279,661,226,0.38101,1.0,0.38101,1.00000,False
+primary,pooled,bgem3,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.44469363089378033,0.4019556826540556,0.04273794823972471,362,610,194,0.0,0.0,< 1e-5,< 1e-5,True
+primary,pooled,bgem3,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.4019556826540556,0.37785466087177977,0.024101021782275855,264,744,158,0.0,0.0,< 1e-5,< 1e-5,True
+primary,pooled,bgem3,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.3608810881898559,0.37785466087177977,-0.016973572681923843,224,678,264,0.00059,0.00708,0.00059,0.00708,True
+primary,pooled,bgem3,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.36800523133736013,0.3608810881898559,0.007124143147504203,197,812,157,0.10578,0.86787,0.10578,0.86787,False
+primary,pooled,bgem3,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.36800523133736013,0.37785466087177977,-0.00984942953441964,282,607,277,0.09643,0.86787,0.09643,0.86787,False
+exploratory,arguana,bm25,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.504970993909531,0.4599580966415889,0.045012897267942165,72,118,43,0.00157,,0.00157,--,True
+exploratory,arguana,bm25,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.4599580966415889,0.46820229865334934,-0.00824420201176046,15,187,31,0.19388,,0.19388,--,False
+exploratory,arguana,bm25,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.4599580966415889,0.4671650563170529,-0.007206959675464031,29,167,37,0.36924,,0.36924,--,False
+exploratory,arguana,bm25,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.46820229865334934,0.4671650563170529,0.001037242336296429,23,195,15,0.82175,,0.82175,--,False
+exploratory,arguana,bm25,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.4856437996397038,0.4671650563170529,0.01847874332265087,28,202,3,0.00038,,0.00038,--,True
+exploratory,arguana,bm25,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.49052996997629156,0.4856437996397038,0.004886170336587781,20,183,30,0.51579,,0.51579,--,False
+exploratory,arguana,bm25,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.49052996997629156,0.4671650563170529,0.02336491365923865,36,171,26,0.01002,,0.01002,--,True
+exploratory,arguana,minilm,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.48015902873722593,0.3781395902331971,0.10201943850402884,96,97,40,0.0,,< 1e-5,--,True
+exploratory,arguana,minilm,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.3781395902331971,0.3812494543185169,-0.0031098640853198245,35,156,42,0.70832,,0.70832,--,False
+exploratory,arguana,minilm,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.3781395902331971,0.3858753854072566,-0.007735795174059479,37,152,44,0.38026,,0.38026,--,False
+exploratory,arguana,minilm,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.3812494543185169,0.3858753854072566,-0.004625931088739654,30,167,36,0.53248,,0.53248,--,False
+exploratory,arguana,minilm,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.4185363176697989,0.3858753854072566,0.0326609322625423,79,108,46,0.04229,,0.04229,--,True
+exploratory,arguana,minilm,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.42003330058043603,0.4185363176697989,0.0014969829106371568,48,136,49,0.88956,,0.88956,--,False
+exploratory,arguana,minilm,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.42003330058043603,0.3858753854072566,0.034157915173179454,88,93,52,0.0599,,0.05990,--,False
+exploratory,arguana,e5small,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.4078750200427402,0.34134369383321633,0.06653132620952384,77,122,34,1e-05,,0.00001,--,True
+exploratory,arguana,e5small,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.34134369383321633,0.34668496123115256,-0.005341267397936222,26,174,33,0.39727,,0.39727,--,False
+exploratory,arguana,e5small,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.34134369383321633,0.3517819817828964,-0.010438287949680047,29,166,38,0.21192,,0.21192,--,False
+exploratory,arguana,e5small,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.34668496123115256,0.3517819817828964,-0.005097020551743825,25,184,24,0.41517,,0.41517,--,False
+exploratory,arguana,e5small,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.3468363596247348,0.3517819817828964,-0.004945622158161578,53,115,65,0.77648,,0.77648,--,False
+exploratory,arguana,e5small,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.3326411480900449,0.3468363596247348,-0.014195211534689889,42,140,51,0.20557,,0.20557,--,False
+exploratory,arguana,e5small,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.3326411480900449,0.3517819817828964,-0.019140833692851467,56,112,65,0.267,,0.26700,--,False
+exploratory,arguana,bgem3,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.5457757879515188,0.5569259032570087,-0.011150115305489927,48,129,56,0.41469,,0.41469,--,False
+exploratory,arguana,bgem3,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.5569259032570087,0.5503420566990718,0.006583846557936979,31,171,31,0.40414,,0.40414,--,False
+exploratory,arguana,bgem3,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.5569259032570087,0.5456670824991228,0.011258820757885979,44,149,40,0.26953,,0.26953,--,False
+exploratory,arguana,bgem3,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.5503420566990718,0.5456670824991228,0.004674974199949,31,174,28,0.51085,,0.51085,--,False
+exploratory,arguana,bgem3,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.5042732321430929,0.5456670824991228,-0.04139385035602983,47,123,63,0.00336,,0.00336,--,True
+exploratory,arguana,bgem3,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.5087135469071902,0.5042732321430929,0.004440314764097231,49,140,44,0.71209,,0.71209,--,False
+exploratory,arguana,bgem3,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.5087135469071902,0.5456670824991228,-0.036953535591932596,57,103,73,0.02759,,0.02759,--,True
+exploratory,arguana,minilm_vocabexp,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.4064068773469766,0.4012979274668408,0.005108949880135827,32,169,32,0.51618,,0.51618,--,False
+exploratory,arguana,minilm_vocabexp,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.4064068773469766,0.3967183473273258,0.00968853001965081,36,155,42,0.34758,,0.34758,--,False
+exploratory,arguana,minilm_vocabexp,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.4012979274668408,0.3967183473273258,0.004579580139514983,33,170,30,0.53713,,0.53713,--,False
+exploratory,nfcorpus,bm25,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.2888433193748907,0.2715984958301712,0.017244823544719512,47,65,21,0.09325,,0.09325,--,False
+exploratory,nfcorpus,bm25,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.2715984958301712,0.27368375908985954,-0.0020852632596883303,9,116,8,0.50344,,0.50344,--,False
+exploratory,nfcorpus,bm25,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.2715984958301712,0.272830923981908,-0.0012324281517367974,14,101,18,0.71615,,0.71615,--,False
+exploratory,nfcorpus,bm25,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.27368375908985954,0.272830923981908,0.0008528351079515328,7,114,12,0.63664,,0.63664,--,False
+exploratory,nfcorpus,bm25,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.2863174651231404,0.272830923981908,0.013486541141232378,37,95,1,0.0,,< 1e-5,--,True
+exploratory,nfcorpus,bm25,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.28760032999711976,0.2863174651231404,0.0012828648739793835,6,113,14,0.89423,,0.89423,--,False
+exploratory,nfcorpus,bm25,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.28760032999711976,0.272830923981908,0.014769406015211761,35,88,10,0.05431,,0.05431,--,False
+exploratory,nfcorpus,minilm,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.33344607744647936,0.2899584649481938,0.04348761249828559,61,42,30,8e-05,,0.00008,--,True
+exploratory,nfcorpus,minilm,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.2899584649481938,0.2896476210828108,0.0003108438653829926,29,74,30,0.93326,,0.93326,--,False
+exploratory,nfcorpus,minilm,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.2899584649481938,0.29129673741881196,-0.0013382724706181848,35,58,40,0.78849,,0.78849,--,False
+exploratory,nfcorpus,minilm,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.2896476210828108,0.29129673741881196,-0.0016491163360011774,26,79,28,0.65757,,0.65757,--,False
+exploratory,nfcorpus,minilm,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.281433239644252,0.29129673741881196,-0.00986349777455997,38,45,50,0.1526,,0.15260,--,False
+exploratory,nfcorpus,minilm,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.301415975975407,0.281433239644252,0.019982736331154993,36,77,20,0.09991,,0.09991,--,False
+exploratory,nfcorpus,minilm,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.301415975975407,0.29129673741881196,0.010119238556595023,47,47,39,0.43478,,0.43478,--,False
+exploratory,nfcorpus,e5small,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.3166217333118135,0.25736099393856504,0.05926073937324844,68,38,27,0.0,,< 1e-5,--,True
+exploratory,nfcorpus,e5small,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.25736099393856504,0.24886835577846647,0.00849263816009857,34,77,22,0.06111,,0.06111,--,False
+exploratory,nfcorpus,e5small,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.25736099393856504,0.2433253743842009,0.014035619554364137,42,68,23,0.02289,,0.02289,--,True
+exploratory,nfcorpus,e5small,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.24886835577846647,0.2433253743842009,0.005542981394265567,27,92,14,0.21614,,0.21614,--,False
+exploratory,nfcorpus,e5small,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.2642036504148273,0.2433253743842009,0.02087827603062639,46,51,36,0.02496,,0.02496,--,True
+exploratory,nfcorpus,e5small,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.2704226638925619,0.2642036504148273,0.006219013477734625,23,85,25,0.54242,,0.54242,--,False
+exploratory,nfcorpus,e5small,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.2704226638925619,0.2433253743842009,0.027097289508361017,52,45,36,0.04226,,0.04226,--,True
+exploratory,nfcorpus,bgem3,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.3139414607094564,0.29729030222716546,0.01665115848229093,63,36,34,0.2579,,0.25790,--,False
+exploratory,nfcorpus,bgem3,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.29729030222716546,0.28116382431556225,0.01612647791160321,35,74,24,0.00506,,0.00506,--,True
+exploratory,nfcorpus,bgem3,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.29729030222716546,0.2763801089195341,0.020910193307631386,46,62,25,0.00175,,0.00175,--,True
+exploratory,nfcorpus,bgem3,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.28116382431556225,0.2763801089195341,0.004783715396028176,31,81,21,0.23251,,0.23251,--,False
+exploratory,nfcorpus,bgem3,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.2784484115620574,0.2763801089195341,0.002068302642523334,42,46,45,0.76498,,0.76498,--,False
+exploratory,nfcorpus,bgem3,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.279356288570689,0.2784484115620574,0.0009078770086315968,30,79,24,0.94697,,0.94697,--,False
+exploratory,nfcorpus,bgem3,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.279356288570689,0.2763801089195341,0.002976179651154931,52,39,42,0.83577,,0.83577,--,False
+exploratory,nfcorpus,minilm_vocabexp,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.31396925330150866,0.31028207330033775,0.003687180001170909,31,77,25,0.39416,,0.39416,--,False
+exploratory,nfcorpus,minilm_vocabexp,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.31396925330150866,0.3098878076028423,0.004081445698666364,35,64,34,0.44294,,0.44294,--,False
+exploratory,nfcorpus,minilm_vocabexp,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.31028207330033775,0.3098878076028423,0.00039426569749545504,19,90,24,0.91569,,0.91569,--,False
+exploratory,scifact,bm25,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.685261357236839,0.6605677879929494,0.024693569243889657,32,255,9,0.00022,,0.00022,--,True
+exploratory,scifact,bm25,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.6605677879929494,0.66401741421101,-0.003449626218060664,5,285,6,0.2037,,0.20370,--,False
+exploratory,scifact,bm25,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.6605677879929494,0.6655324956047142,-0.004964707611764818,5,280,11,0.0691,,0.06910,--,False
+exploratory,scifact,bm25,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.66401741421101,0.6655324956047142,-0.001515081393704154,1,290,5,0.15669,,0.15669,--,False
+exploratory,scifact,bm25,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.6728912329691692,0.6655324956047142,0.007358737364455026,15,281,0,0.0,,< 1e-5,--,True
+exploratory,scifact,bm25,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.6548659749970606,0.6728912329691692,-0.018025257972108633,10,264,22,0.03466,,0.03466,--,True
+exploratory,scifact,bm25,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.6548659749970606,0.6655324956047142,-0.010666520607653607,20,258,18,0.19965,,0.19965,--,False
+exploratory,scifact,minilm,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.6553968433918003,0.5911867127288826,0.0642101306629177,81,186,29,1e-05,,0.00001,--,True
+exploratory,scifact,minilm,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.5911867127288826,0.5854194541909652,0.005767258537917375,27,246,23,0.20745,,0.20745,--,False
+exploratory,scifact,minilm,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.5911867127288826,0.5821296730926828,0.009057039636199749,34,234,28,0.13442,,0.13442,--,False
+exploratory,scifact,minilm,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.5854194541909652,0.5821296730926828,0.003289781098282374,21,249,26,0.45305,,0.45305,--,False
+exploratory,scifact,minilm,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.6113462624914494,0.5821296730926828,0.02921658939876659,60,203,33,0.00284,,0.00284,--,True
+exploratory,scifact,minilm,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.60672743390727,0.6113462624914494,-0.004618828584179391,34,218,44,0.70558,,0.70558,--,False
+exploratory,scifact,minilm,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.60672743390727,0.5821296730926828,0.0245977608145872,68,179,49,0.09653,,0.09653,--,False
+exploratory,scifact,e5small,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.6740583586779596,0.614652893455113,0.05940546522284662,77,184,35,0.0001,,0.00010,--,True
+exploratory,scifact,e5small,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.614652893455113,0.6121352896433945,0.002517603811718505,28,245,23,0.67205,,0.67205,--,False
+exploratory,scifact,e5small,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.614652893455113,0.6070729767106523,0.00757991674446068,37,231,28,0.29011,,0.29011,--,False
+exploratory,scifact,e5small,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.6121352896433945,0.6070729767106523,0.0050623129327421745,23,253,20,0.32123,,0.32123,--,False
+exploratory,scifact,e5small,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.6307857501675213,0.6070729767106523,0.023712773456868952,55,209,32,0.04785,,0.04785,--,True
+exploratory,scifact,e5small,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.6053898765893314,0.6307857501675213,-0.025395873578189843,21,235,40,0.00519,,0.00519,--,True
+exploratory,scifact,e5small,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.6053898765893314,0.6070729767106523,-0.0016831001213208907,55,191,50,0.9105,,0.91050,--,False
+exploratory,scifact,bgem3,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.6399067435363792,0.6189697742873864,0.0209369692489928,57,203,36,0.05785,,0.05785,--,False
+exploratory,scifact,bgem3,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.6189697742873864,0.6096859339172059,0.009283840370180485,41,222,33,0.20721,,0.20721,--,False
+exploratory,scifact,bgem3,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.6189697742873864,0.5921415103757605,0.02682826391162596,55,213,28,0.00264,,0.00264,--,True
+exploratory,scifact,bgem3,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.6096859339172059,0.5921415103757605,0.017544423541445475,41,230,25,0.01399,,0.01399,--,True
+exploratory,scifact,bgem3,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.562743169949935,0.5921415103757605,-0.029398340425825453,37,204,55,0.00315,,0.00315,--,True
+exploratory,scifact,bgem3,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.5641262233049571,0.562743169949935,0.0013830533550220903,35,222,39,0.89314,,0.89314,--,False
+exploratory,scifact,bgem3,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.5641262233049571,0.5921415103757605,-0.028015287070803363,49,186,61,0.0264,,0.02640,--,True
+exploratory,scifact,minilm_vocabexp,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.5673263569594994,0.5674688949018136,-0.00014253794231422479,24,250,22,0.97543,,0.97543,--,False
+exploratory,scifact,minilm_vocabexp,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.5673263569594994,0.5688261670347675,-0.0014998100752681154,33,230,33,0.81644,,0.81644,--,False
+exploratory,scifact,minilm_vocabexp,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.5674688949018136,0.5688261670347675,-0.0013572721329538906,17,252,27,0.79556,,0.79556,--,False
+exploratory,fiqa,bm25,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.2506786416578232,0.22633667186197448,0.02434196979584874,66,182,49,0.02442,,0.02442,--,True
+exploratory,fiqa,bm25,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.22633667186197448,0.22421469270718913,0.0021219791547853473,10,280,7,0.2056,,0.20560,--,False
+exploratory,fiqa,bm25,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.22633667186197448,0.2198813705625338,0.006455301299440691,25,262,10,0.00899,,0.00899,--,True
+exploratory,fiqa,bm25,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.22421469270718913,0.2198813705625338,0.004333322144655344,18,274,5,0.0177,,0.01770,--,True
+exploratory,fiqa,bm25,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.2331055336947309,0.2198813705625338,0.013224163132197098,40,255,2,2e-05,,0.00002,--,True
+exploratory,fiqa,bm25,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.23151336047972698,0.2331055336947309,-0.0015921732150039059,20,248,29,0.77603,,0.77603,--,False
+exploratory,fiqa,bm25,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.23151336047972698,0.2198813705625338,0.011631989917193192,47,231,19,0.06429,,0.06429,--,False
+exploratory,fiqa,minilm,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.40302908685326977,0.1833106758395534,0.21971841101371636,170,108,19,0.0,,< 1e-5,--,True
+exploratory,fiqa,minilm,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.1833106758395534,0.18955803447226213,-0.006247358632708727,42,211,44,0.13996,,0.13996,--,False
+exploratory,fiqa,minilm,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.1833106758395534,0.17917031797033114,0.004140357869222261,52,200,45,0.44321,,0.44321,--,False
+exploratory,fiqa,minilm,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.18955803447226213,0.17917031797033114,0.010387716501930988,48,210,39,0.01802,,0.01802,--,True
+exploratory,fiqa,minilm,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.24286449135659918,0.17917031797033114,0.06369417338626804,94,169,34,0.0,,< 1e-5,--,True
+exploratory,fiqa,minilm,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.2492482660891927,0.24286449135659918,0.006383774732593522,65,187,45,0.48684,,0.48684,--,False
+exploratory,fiqa,minilm,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.2492482660891927,0.17917031797033114,0.07007794811886156,105,159,33,0.0,,< 1e-5,--,True
+exploratory,fiqa,e5small,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.3242598298792389,0.17407695514304797,0.15018287473619094,131,144,22,0.0,,< 1e-5,--,True
+exploratory,fiqa,e5small,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.17407695514304797,0.1642530333204291,0.009823921822618875,29,241,27,0.15611,,0.15611,--,False
+exploratory,fiqa,e5small,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.17407695514304797,0.14137179081356144,0.03270516432948653,49,225,23,1e-05,,0.00001,--,True
+exploratory,fiqa,e5small,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.1642530333204291,0.14137179081356144,0.022881242506867655,45,239,13,0.00138,,0.00138,--,True
+exploratory,fiqa,e5small,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.13688767745974018,0.14137179081356144,-0.004484113353821262,39,213,45,0.67332,,0.67332,--,False
+exploratory,fiqa,e5small,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.15472997367291447,0.13688767745974018,0.01784229621317429,43,231,23,0.01615,,0.01615,--,True
+exploratory,fiqa,e5small,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.15472997367291447,0.14137179081356144,0.01335818285935303,53,202,42,0.25422,,0.25422,--,False
+exploratory,fiqa,bgem3,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.410300978815267,0.27606602006079534,0.13423495875447167,130,140,27,0.0,,< 1e-5,--,True
+exploratory,fiqa,bgem3,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.27606602006079534,0.258996042251893,0.017069977808902348,52,216,29,0.00245,,0.00245,--,True
+exploratory,fiqa,bgem3,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.27606602006079534,0.2286921613219462,0.04737385873884914,79,190,28,0.0,,< 1e-5,--,True
+exploratory,fiqa,bgem3,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.258996042251893,0.2286921613219462,0.03030388092994679,55,216,26,0.00031,,0.00031,--,True
+exploratory,fiqa,bgem3,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.2179485594379456,0.2286921613219462,-0.010743601884000586,45,191,61,0.33604,,0.33604,--,False
+exploratory,fiqa,bgem3,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.23513187548916611,0.2179485594379456,0.017183316051220504,58,206,33,0.02631,,0.02631,--,True
+exploratory,fiqa,bgem3,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.23513187548916611,0.2286921613219462,0.006439714167219918,64,175,58,0.59242,,0.59242,--,False
+exploratory,fiqa,minilm_vocabexp,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.18388938413233427,0.1849582575967664,-0.0010688734644321296,39,216,42,0.79005,,0.79005,--,False
+exploratory,fiqa,minilm_vocabexp,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.18388938413233427,0.18027237457774323,0.003617009554591044,50,200,47,0.52574,,0.52574,--,False
+exploratory,fiqa,minilm_vocabexp,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.1849582575967664,0.18027237457774323,0.004685883019023174,47,216,34,0.34581,,0.34581,--,False
+exploratory,scidocs,bm25,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.1778083892634977,0.175098766043429,0.0027096232200687076,20,176,11,0.26459,,0.26459,--,False
+exploratory,scidocs,bm25,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.175098766043429,0.17505525323011675,4.3512813312246434e-05,6,198,3,0.96908,,0.96908,--,False
+exploratory,scidocs,bm25,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.175098766043429,0.1749599232730219,0.00013884277040709936,9,193,5,0.93888,,0.93888,--,False
+exploratory,scidocs,bm25,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.17505525323011675,0.1749599232730219,9.532995709485292e-05,5,200,2,0.76482,,0.76482,--,False
+exploratory,scidocs,bm25,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.17597956591592784,0.1749599232730219,0.001019642642905938,9,197,1,0.22475,,0.22475,--,False
+exploratory,scidocs,bm25,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.17391073792367726,0.17597956591592784,-0.0020688279922505826,5,195,7,0.23994,,0.23994,--,False
+exploratory,scidocs,bm25,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.17391073792367726,0.1749599232730219,-0.0010491853493446446,10,190,7,0.56595,,0.56595,--,False
+exploratory,scidocs,minilm,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.2403629255734464,0.20950971791935896,0.030853207654087444,81,80,46,2e-05,,0.00002,--,True
+exploratory,scidocs,minilm,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.20950971791935896,0.20545457065036898,0.004055147268989978,27,155,25,0.22655,,0.22655,--,False
+exploratory,scidocs,minilm,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.20950971791935896,0.2022352708089761,0.007274447110382859,41,138,28,0.03102,,0.03102,--,True
+exploratory,scidocs,minilm,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.20545457065036898,0.2022352708089761,0.003219299841392881,28,162,17,0.07806,,0.07806,--,False
+exploratory,scidocs,minilm,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.2180917272050135,0.2022352708089761,0.01585645639603739,61,103,43,0.00211,,0.00211,--,True
+exploratory,scidocs,minilm,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.20858339663546527,0.2180917272050135,-0.009508330569548223,18,159,30,0.01406,,0.01406,--,True
+exploratory,scidocs,minilm,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.20858339663546527,0.2022352708089761,0.006348125826489165,57,100,50,0.3011,,0.30110,--,False
+exploratory,scidocs,e5small,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.1500135929628232,0.13557487812921085,0.014438714833612365,44,121,42,0.07306,,0.07306,--,False
+exploratory,scidocs,e5small,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.13557487812921085,0.13652517106339465,-0.0009502929341838051,26,160,21,0.78659,,0.78659,--,False
+exploratory,scidocs,e5small,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.13557487812921085,0.1346605998933032,0.0009142782359076451,37,140,30,0.8233,,0.82330,--,False
+exploratory,scidocs,e5small,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.13652517106339465,0.1346605998933032,0.0018645711700914502,22,168,17,0.52455,,0.52455,--,False
+exploratory,scidocs,e5small,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.1487166661502123,0.1346605998933032,0.014056066256909111,61,114,32,0.03867,,0.03867,--,True
+exploratory,scidocs,e5small,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.15298619843169467,0.1487166661502123,0.004269532281482358,26,166,15,0.24001,,0.24001,--,False
+exploratory,scidocs,e5small,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.15298619843169467,0.1346605998933032,0.01832559853839147,63,111,33,0.00856,,0.00856,--,True
+exploratory,scidocs,bgem3,a,EN vs CS-clean (none),EN__none,CS-clean__none,0.18512567130523544,0.16507400566381736,0.02005166564141808,64,102,41,0.00385,,0.00385,--,True
+exploratory,scidocs,bgem3,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.16507400566381736,0.16304891014926512,0.0020250955145522387,28,153,26,0.53396,,0.53396,--,False
+exploratory,scidocs,bgem3,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.16507400566381736,0.16175889315970263,0.003315112504114731,40,130,37,0.42395,,0.42395,--,False
+exploratory,scidocs,bgem3,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.16304891014926512,0.16175889315970263,0.0012900169895624924,25,157,25,0.66484,,0.66484,--,False
+exploratory,scidocs,bgem3,c,stop vs none at CS-noise50,CS-noise50__stop,CS-noise50__none,0.16886640842525205,0.16175889315970263,0.0071075152655494245,53,114,40,0.21039,,0.21039,--,False
+exploratory,scidocs,bgem3,d,key vs stop at CS-noise50,CS-noise50__key,CS-noise50__stop,0.17678225995910798,0.16886640842525205,0.007915851533855933,25,165,17,0.07777,,0.07777,--,False
+exploratory,scidocs,bgem3,e,key vs none at CS-noise50,CS-noise50__key,CS-noise50__none,0.17678225995910798,0.16175889315970263,0.015023366799405358,60,104,43,0.03139,,0.03139,--,True
+exploratory,scidocs,minilm_vocabexp,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.21300758451309293,0.2149646008825561,-0.0019570163694631604,23,156,28,0.47761,,0.47761,--,False
+exploratory,scidocs,minilm_vocabexp,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.21300758451309293,0.21203603374328236,0.0009715507698105641,37,140,30,0.8231,,0.82310,--,False
+exploratory,scidocs,minilm_vocabexp,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.2149646008825561,0.21203603374328236,0.0029285671392737245,23,170,14,0.38349,,0.38349,--,False
+exploratory,pooled,bm25,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.37932104444495046,0.3815338175851716,-0.0022127731402211137,45,1066,55,0.14517,,0.14517,--,False
+exploratory,pooled,bm25,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.3815338175851716,0.3804931911535596,0.0010406264316119573,54,1073,39,0.34578,,0.34578,--,False
+exploratory,pooled,minilm,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.3426021009123916,0.3425954093170173,6.691595374308523e-06,160,842,164,0.99767,,0.99767,--,False
+exploratory,pooled,minilm,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.3425954093170173,0.3396553169868553,0.002940092330162014,153,867,146,0.18688,,0.18688,--,False
+exploratory,pooled,e5small,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.3220104672126191,0.3191363587702654,0.0028741084423536956,143,897,126,0.29759,,0.29759,--,False
+exploratory,pooled,e5small,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.3191363587702654,0.31207825360583885,0.007058105164426565,142,936,88,0.00897,,0.00897,--,True
+exploratory,pooled,bgem3,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.4019556826540556,0.3917362549177158,0.010219427736339826,187,836,143,0.00063,,0.00063,--,True
+exploratory,pooled,bgem3,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.3917362549177158,0.37785466087177977,0.01388159404593603,183,858,125,3e-05,,0.00003,--,True
+exploratory,pooled,minilm_vocabexp,b1,CS-clean vs CS-noise25 (none),CS-clean__none,CS-noise25__none,0.34570071342407505,0.3449150948787173,0.0007856185453577469,149,868,149,0.73208,,0.73208,--,False
+exploratory,pooled,minilm_vocabexp,b2,CS-clean vs CS-noise50 (none),CS-clean__none,CS-noise50__none,0.34570071342407505,0.3425860660507593,0.0031146473733157376,191,789,186,0.3207,,0.32070,--,False
+exploratory,pooled,minilm_vocabexp,b3,CS-noise25 vs CS-noise50 (none),CS-noise25__none,CS-noise50__none,0.3449150948787173,0.3425860660507593,0.0023290288279579907,139,898,129,0.33966,,0.33966,--,False

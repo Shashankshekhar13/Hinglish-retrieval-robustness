@@ -37,17 +37,20 @@ def load_clean_queries(dataset: str, queries_dir: str | Path = "data/queries") -
     # Check if human annotation sheet exists
     human_sheet = Path("data/annotation/check_sheet_done.csv")
     if human_sheet.exists():
-        try:
-            df_human = pd.read_csv(human_sheet)
-            if "qid" in df_human.columns and "dataset" in df_human.columns:
-                ds_human = df_human[df_human["dataset"] == dataset]
-                cs_col = "corrected_cs" if "corrected_cs" in ds_human.columns else "cs_query"
-                for _, row in ds_human.iterrows():
-                    qid = str(row["qid"])
-                    if qid in clean and pd.notna(row.get(cs_col)):
-                        clean[qid]["CS-human"] = str(row[cs_col])
-        except Exception as e:
-            logger.warning(f"Error reading human annotations: {e}")
+        df_human = pd.read_csv(human_sheet)
+        if "qid" in df_human.columns and "dataset" in df_human.columns:
+            ds_human = df_human[df_human["dataset"] == dataset]
+            for _, row in ds_human.iterrows():
+                qid = str(row["qid"])
+                if qid in clean:
+                    rw = str(row.get("rewrite", "") or "").strip()
+                    if rw and rw.lower() != "nan":
+                        clean[qid]["CS-human"] = rw
+                    elif (
+                        str(row.get("natural", "")).strip().lower() in ("y", "yes")
+                        and str(row.get("meaning_preserved", "")).strip().lower() in ("y", "yes")
+                    ):
+                        clean[qid]["CS-human"] = str(row.get("hinglish", ""))
 
     return clean
 
@@ -141,19 +144,19 @@ def normalize_query_batch(
             norm_queries[qid] = trans_text
 
         elif normalizer == "llm":
-            if client is not None:
+            from .baselines.llm_translate import llm_translate
+            try:
                 trans_text, _ = llm_translate(dataset, qid, raw_text, condition, client=client, cfg=cfg)
+                if not trans_text or not trans_text.strip():
+                    raise ValueError(f"Empty translation returned for {dataset}:{qid}:{condition}")
                 norm_queries[qid] = trans_text
-            else:
-                # If no client provided, check cache first
-                from .baselines.llm_translate import llm_translate
-                try:
-                    trans_text, _ = llm_translate(dataset, qid, raw_text, condition, client=None, cfg=cfg)
-                    norm_queries[qid] = trans_text
-                except Exception:
-                    norm_queries[qid] = raw_text
+            except Exception as e:
+                raise RuntimeError(
+                    f"LLM translation failed for {dataset}:{qid}:{condition} (client={'provided' if client is not None else 'None'}): {e}. "
+                    "Silent fallback to raw text is disabled."
+                ) from e
         else:
-            norm_queries[qid] = raw_text
+            raise ValueError(f"Unknown normalizer: {normalizer!r}")
 
     return norm_queries, aggregated_stats
 
@@ -280,30 +283,45 @@ def run_grid(
                 # Check if we should compute normalization stats
                 norm_key = (ds_name, cond, norm)
                 if norm_key not in norm_cache:
-                    nq, ns = normalize_query_batch(
-                        ds_name, cond, norm, clean_queries, lexicon, tagger, client=llm_client, cfg=cfg
+                    try:
+                        nq, ns = normalize_query_batch(
+                            ds_name, cond, norm, clean_queries, lexicon, tagger, client=llm_client, cfg=cfg
+                        )
+                        norm_cache[norm_key] = (nq, ns)
+                    except Exception as e:
+                        logger.warning(
+                            f"Skipping cell ({ds_name}, {ret_name}, {cond}, {norm}): normalizer failed ({e}). "
+                            "Never substituting original text."
+                        )
+                        norm_cache[norm_key] = None
+                        continue
+                elif norm_cache[norm_key] is None:
+                    logger.warning(
+                        f"Skipping cell ({ds_name}, {ret_name}, {cond}, {norm}): normalizer previously failed."
                     )
-                    norm_cache[norm_key] = (nq, ns)
-                    if norm_key not in seen_norm_stats:
-                        seen_norm_stats.add(norm_key)
-                        t_hi = ns["tokens_hi"]
-                        norm_stats_rows.append({
-                            "dataset": ds_name,
-                            "condition": cond,
-                            "normalizer": norm,
-                            "n_queries": n_queries,
-                            "tokens_hi": t_hi,
-                            "stopwords_dropped": ns["stopwords_dropped"],
-                            "resolved_exact": ns["resolved_exact"],
-                            "resolved_key": ns["resolved_key"],
-                            "resolved_coarse": ns["resolved_coarse"],
-                            "unresolved": ns["unresolved"],
-                            "gated_out_queries": ns["gated_out_queries"],
-                            "pct_exact": round(ns["resolved_exact"] / t_hi * 100, 2) if t_hi > 0 else 0.0,
-                            "pct_key": round(ns["resolved_key"] / t_hi * 100, 2) if t_hi > 0 else 0.0,
-                            "pct_coarse": round(ns["resolved_coarse"] / t_hi * 100, 2) if t_hi > 0 else 0.0,
-                            "pct_unresolved": round(ns["unresolved"] / t_hi * 100, 2) if t_hi > 0 else 0.0,
-                        })
+                    continue
+
+                if norm_key not in seen_norm_stats:
+                    seen_norm_stats.add(norm_key)
+                    _, ns = norm_cache[norm_key]
+                    t_hi = ns["tokens_hi"]
+                    norm_stats_rows.append({
+                        "dataset": ds_name,
+                        "condition": cond,
+                        "normalizer": norm,
+                        "n_queries": n_queries,
+                        "tokens_hi": t_hi,
+                        "stopwords_dropped": ns["stopwords_dropped"],
+                        "resolved_exact": ns["resolved_exact"],
+                        "resolved_key": ns["resolved_key"],
+                        "resolved_coarse": ns["resolved_coarse"],
+                        "unresolved": ns["unresolved"],
+                        "gated_out_queries": ns["gated_out_queries"],
+                        "pct_exact": round(ns["resolved_exact"] / t_hi * 100, 2) if t_hi > 0 else 0.0,
+                        "pct_key": round(ns["resolved_key"] / t_hi * 100, 2) if t_hi > 0 else 0.0,
+                        "pct_coarse": round(ns["resolved_coarse"] / t_hi * 100, 2) if t_hi > 0 else 0.0,
+                        "pct_unresolved": round(ns["unresolved"] / t_hi * 100, 2) if t_hi > 0 else 0.0,
+                    })
 
                 if run_file.exists() and not force:
                     # Skip search and load existing run
@@ -340,7 +358,7 @@ def run_grid(
                 subset=["dataset", "retriever", "condition", "normalizer"], keep="last"
             )
         except Exception as e:
-            logger.warning(f"Could not merge with existing results.csv: {e}")
+            raise IOError(f"Could not merge with existing results.csv at {results_csv_path}: {e}") from e
     results_df.to_csv(results_csv_path, index=False)
 
     if norm_stats_rows:
@@ -354,7 +372,7 @@ def run_grid(
                     subset=["dataset", "condition", "normalizer"], keep="last"
                 )
             except Exception as e:
-                logger.warning(f"Could not merge with existing norm_stats.csv: {e}")
+                raise IOError(f"Could not merge with existing norm_stats.csv at {norm_csv_path}: {e}") from e
         norm_df.to_csv(norm_csv_path, index=False)
 
     return results_df
