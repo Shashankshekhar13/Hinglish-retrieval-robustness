@@ -245,9 +245,6 @@ PhonoNorm operates purely at inference time with zero model fine-tuning:
 │       ├── human_results.csv       # 120-query human split evaluation results
 │       ├── significance_v2.csv     # 100k permutation Fisher tests (Holm-corrected)
 │       └── *.tex                   # Generated publication LaTeX tables
-├── resources/
-│   ├── ambiguous.txt               # Cross-lingual homograph collision tokens
-│   └── hi_stopwords.txt            # Curated Romanized Hindi stopwords & variants
 ├── scripts/
 │   ├── 01_download.py              # Download BEIR benchmark corpora
 │   ├── 02_build_lexicon.py         # Build romanized MUSE phonetic hash dictionary

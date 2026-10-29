@@ -1,2 +1,0 @@
-Translate this search query into English. Output only the translation.
-{query}

@@ -6,6 +6,156 @@ TOK_RE = re.compile(r"[a-z0-9]+")
 
 _DEFAULT_RESOURCES_DIR = Path(__file__).resolve().parent.parent.parent / "resources"
 
+_EMBEDDED_STOPWORDS = """
+nahi,nahin,nhi,nai,nahee
+hai,he,hy
+hain,hn,hen
+kya,kia,kyaa
+ka,kaa
+ki,kee
+ke
+mein,me,main,mai
+se
+ko,koo
+aur,aor,awr,aaur
+bhi,bi,bhee
+kyun,kyon,kyu,kyoun,kyoon
+kaise,kese,kaisa,kaisi
+kitna,kitni,kitne
+ho
+hota,hote,hoti
+karta,karte,karti
+ye,yeh
+wo,woh,vo,voh
+jo,zo
+ya
+lekin,lekn
+isliye,islye
+kyunki,kyunke,kynki
+liye,lye
+par,pr
+pe
+tha
+thi,thee
+the
+raha,rha
+rahi,rhi
+rahe,rhe
+hoon,hun
+kab,kabhi
+kahan,kaha
+kidhar
+kaun,koun
+kisi
+kuch,kuchh
+koi
+sab,sabhi
+ab,abhi
+jab,tab
+tabhi
+agar
+yadi
+magar
+parantu
+balki
+taki,taaki
+phir,fir
+aise,aisa,aisi
+waise,waisa,waisi
+jaise,jaisa,jaisi
+itna,itni,itne
+wahan,waha
+yahan,yaha
+hum,ham
+tum,aap
+mera,meri
+tera,teri,tere
+iska,iski,iske
+uska,uski,uske
+inka,inki,inke
+unka,unki,unke
+apna,apne,apni
+saath,sath
+baad
+pehle
+andar
+bahar
+aage
+peeche,piche
+paas
+door
+bina
+tak
+gaya,gaye,gayi
+hua,hue,hui
+sakta,sakte,sakti
+chahiye
+chuka,chuke,chuki
+padta,padte,padti
+deta,dete,deti
+kare,karen,karega,karenge
+hoga,hogi,hoge,honge
+kar,karna,karne
+dena,dene
+lena,lene
+ja,jaa,jana,jane,jata,jate,jati
+aana,aane,aata,aate,aati
+bol,bolna,bolne
+pa,pana,pane,paate,paati
+bilkul
+zyada,jada
+kam
+bahut,bohot
+mat
+sahi
+toh,to
+na
+bas
+sirf
+shuru
+khatam
+lagta,lagte,lagti
+pata
+baat
+naam
+tarah
+waqt
+din
+saal
+log,logon
+cheez,cheezein
+bana,banane,banae
+rakh,rakhna,rakhne
+dekh,dekhna,dekhne
+samajh,samajhna
+mil,milna,milne,milta,milte,milti
+chhod,chhodna
+aao,jao,karo,dekho,bolo
+jabki,jabbki
+usme,usmein
+isme,ismein
+usse,ussey
+isse,issey
+usko
+isko
+unka,unke,unki
+inka,inke,inki
+kiya
+kiye,kye
+diya,diye,dya
+liya,liye,lye
+gaya,gayi,gaye,gya,gyi,gye
+jaata,jaati,jaate,jata,jati,jate
+wala,wale,wali
+jahan,jaha
+unhe,unhein
+inhe,inhein
+usne
+isne
+"""
+
+_EMBEDDED_AMBIGUOUS = "main, to, me, hi, is, us, par, so, he, in, an, the"
+
 def tokenize(text: str) -> list[str]:
     return TOK_RE.findall(text.lower())
 
@@ -14,16 +164,16 @@ def load_stopword_groups(path=None) -> dict[str, str]:
     if not p.exists():
         p = Path("resources/hi_stopwords.txt")
     mapping = {}
-    if p.exists():
-        for line in p.read_text(encoding="utf-8").splitlines():
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
-            parts = [w.strip().lower() for w in line.split(",") if w.strip()]
-            if parts:
-                canonical = parts[0]
-                for variant in parts:
-                    mapping[variant] = canonical
+    lines = p.read_text(encoding="utf-8").splitlines() if p.exists() else _EMBEDDED_STOPWORDS.strip().splitlines()
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = [w.strip().lower() for w in line.split(",") if w.strip()]
+        if parts:
+            canonical = parts[0]
+            for variant in parts:
+                mapping[variant] = canonical
     return mapping
 
 def load_ambiguous(path=None) -> set[str]:
@@ -31,12 +181,12 @@ def load_ambiguous(path=None) -> set[str]:
     if not p.exists():
         p = Path("resources/ambiguous.txt")
     ambiguous = set()
-    if p.exists():
-        for line in p.read_text(encoding="utf-8").splitlines():
-            for w in line.split(","):
-                w = w.strip().lower()
-                if w:
-                    ambiguous.add(w)
+    lines = p.read_text(encoding="utf-8").splitlines() if p.exists() else [_EMBEDDED_AMBIGUOUS]
+    for line in lines:
+        for w in line.split(","):
+            w = w.strip().lower()
+            if w:
+                ambiguous.add(w)
     return ambiguous
 
 class Tagger:
